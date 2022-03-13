@@ -24,6 +24,9 @@ import { middleware } from 'express-ray';
 app.use(middleware.SendRequestToRay);
 ```
 
+![image](https://user-images.githubusercontent.com/5508707/158073710-37209980-63b0-4812-9687-f3c1b7c721ab.png)
+
+
 There is also an error handler middleware named `SendErrorToRay` that sends the request and error details directly to Ray:
 
 ```js
