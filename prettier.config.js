@@ -5,18 +5,6 @@ const overrides = [
             tabWidth: 2,
         },
     },
-    {
-        files: 'tsconfig.json',
-        options: {
-            parser: 'json',
-        },
-    },
-    {
-        files: '.madgerc',
-        options: {
-            parser: 'json',
-        },
-    },
 ];
 
 module.exports = {
