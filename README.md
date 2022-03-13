@@ -1,12 +1,17 @@
-# express-ray
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/5508707/158069694-dcb255a4-b60c-4cfb-be9d-aa39464d3e91.png" alt="logo" height="100" />
+</p>
 
----
+
+# express-ray
 
 Debug express.js server code with Ray to fix problems faster
 
 ---
 
 Install this package in any project using Express.js v4+.
+
+---
 
 ## Usage
 
