@@ -2,7 +2,6 @@
     <img src="https://user-images.githubusercontent.com/5508707/158072103-6b329884-c4fa-42f6-8e55-c753bc73374c.png" alt="logo" height="110" />
 </p>
 
-
 # express-ray
 
 Debug express.js server code with Ray to fix problems faster
@@ -17,19 +16,23 @@ Install this package in any project using Express.js v4.
 
 ### Middleware
 
-`express-ray` provides an error handler middleware named `SendErrorToRay` that sends the request and error details directly to the Ray app:
+Send information about each request to Ray with the `SendRequestToRay` middleware.
 
 ```js
-// other imports
 import { middleware } from 'express-ray';
 
-const app = express();
+app.use(middleware.SendRequestToRay);
+```
+
+There is also an error handler middleware named `SendErrorToRay` that sends the request and error details directly to Ray:
+
+```js
+import { middleware } from 'express-ray';
 
 // <express setup code here>
 
+// register the middleware just before listen()
 app.use(middleware.SendErrorToRay);
-
-// <more express setup code>
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
