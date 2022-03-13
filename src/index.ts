@@ -1,5 +1,7 @@
-console.log('hello world');
+import SendErrorToRay from '@/Middleware/SendErrorToRay';
 
-export function add(a: number, b: number) {
-    return a + b;
-}
+export default {
+    middleware: {
+        SendErrorToRay,
+    },
+};
