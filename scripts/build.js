@@ -1,9 +1,7 @@
 // @ts-nocheck
 
-const { realpathSync, readFileSync, writeFileSync, renameSync } = require('fs');
+const { realpathSync } = require('fs');
 const esbuild = require('esbuild');
-const { basename } = require('path');
-const { spawnSync } = require('child_process');
 
 const buildConfigs = [
     {
@@ -16,12 +14,12 @@ const buildConfigs = [
         constants: {},
         platform: {
             name: 'node',
-            version: 16,
+            version: 14,
         },
     },
     {
         basePath: `${__dirname}/..`,
-        outfile: 'dist/index.esm.mjs',
+        outfile: 'dist/index.es.js',
         format: 'esm',
         entry: 'src/index.ts',
         bundle: true,
@@ -29,7 +27,7 @@ const buildConfigs = [
         constants: {},
         platform: {
             name: 'node',
-            version: 16,
+            version: 14,
         },
     },
 ];
@@ -60,7 +58,7 @@ class Builder {
                 bundle: buildConfig.bundle,
                 format: buildConfig.format,
                 platform: buildConfig.platform.name,
-                target: `${buildConfig.platform.name}${buildConfig.platform.version}`,
+                target: `es2015`, //${buildConfig.platform.name}${buildConfig.platform.version}`,
                 allowOverwrite: true,
                 minify: buildConfig.minify,
                 metafile: true,
@@ -70,6 +68,14 @@ class Builder {
                     ...buildConfig.constants,
                 },
             });
+
+            const text = await esbuild.analyzeMetafile(result.metafile, {
+                color: true,
+                verbose: true,
+            });
+
+            this.writeln(text);
+
             results.push(result);
         });
 
@@ -80,7 +86,7 @@ class Builder {
         return `${bytes / 1024}`.slice(0, 4) + ' kb';
     }
 
-    reportCompileResults(results) {
+    async reportCompileResults(results) {
         results.errors.forEach(errorMsg => this.writeln(`* Error: ${errorMsg}`));
         results.warnings.forEach(msg => this.writeln(`* Warning: ${msg}`));
 
@@ -108,18 +114,6 @@ class Builder {
             .forEach(data => (this.config[data.name] = data.value));
     }
 
-    // convertToProductionFile() {
-    //     const filename = basename(buildConfig.entry).replace(/\.ts$/, '.js');
-    //     const newFilename = require(realpathSync(`${buildConfig.basePath}/package.json`, { encoding: 'utf-8' })).name;
-
-    //     spawnSync('chmod', ['+x', `${buildConfig.outdir}/${filename}`], { stdio: 'ignore' });
-
-    //     const contents = readFileSync(`${buildConfig.outdir}/${filename}`, { encoding: 'utf-8' });
-
-    //     writeFileSync(`${buildConfig.outdir}/${filename}`, `#!/usr/bin/node\n\n${contents}`, { encoding: 'utf-8' });
-    //     renameSync(`${buildConfig.outdir}/${filename}`, `${buildConfig.outdir}/${newFilename}`);
-    // }
-
     async run() {
         this.processArgv();
 
@@ -134,14 +128,10 @@ class Builder {
         const finishedTs = new Date().getTime();
 
         if (this.config.verbose) {
-            results.forEach(result => this.reportCompileResults(result));
+            results.forEach(async result => await this.reportCompileResults(result));
         }
 
         this.writeln((this.config.verbose ? `* D` : `d`) + `one. (${finishedTs - startedTs} ms)`);
-
-        // if (this.config.production) {
-        //     this.convertToProductionFile();
-        // }
     }
 }
 
