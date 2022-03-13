@@ -1,29 +1,9 @@
-# package-skeleton
+# express-ray
 
 ---
 
-<!-- ==START TEMPLATE README== -->
 
-<p align="center">
-    <img style="width: 80%;" src="assets/social-card.png" alt="template logo" />
-</p>
-
-## Description
-
-This is a starter template for NodeJS projects using the latest versions of TypeScript, ESBuild, ESLint, Prettier, and Jest.
-
-## Template Setup
-
-To configure, run:
-
-```bash
-node configure-package.js
-```
-
-This will ask you a series of questions that will customize the template with values such as your name, github username, email address, use of optional packages, and more.  Some of the default values are automatically determined based on your git configuration, but you may change any of the values when prompted.
-
-<!-- ==END TEMPLATE README== -->
-{{package.description}}
+Debug express.js server code with Ray to fix problems faster
 
 ## Setup
 
@@ -35,7 +15,7 @@ npm run dev
 
 ## Testing
 
-`package-skeleton` uses Jest for unit tests.  To run the test suite:
+`express-ray` uses Jest for unit tests.  To run the test suite:
 
 `npm run test`
 
@@ -55,7 +35,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [{{package.author.name}}](https://github.com/{{package.author.github}})
+- [Patrick Organ](https://github.com/patinthehat)
 - [All Contributors](../../contributors)
 
 ## License

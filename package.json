@@ -1,12 +1,9 @@
 {
-    "name": "package-skeleton",
+    "name": "express-ray",
     "version": "1.0.0",
-    "description": "{{package.description}}",
+    "description": "Debug express.js server code with Ray to fix problems faster",
     "main": "dist/index.js",
     "scripts": {
-        "analyze:deps:circular": "node_modules/.bin/madge --extensions js,ts --circular --ts-config ./tsconfig.json src/**",
-        "analyze:deps:list": "node_modules/.bin/madge --extensions js,ts --ts-config ./tsconfig.json src/**",
-        "analyze:deps:graph": "node_modules/.bin/madge --extensions js,ts --image graph.svg --layout dot --ts-config ./tsconfig.json src/**",
         "test": "./node_modules/.bin/jest tests --verbose",
         "test:coverage": "./node_modules/.bin/jest tests --coverage",
         "fmt": "./node_modules/.bin/prettier --config prettier.config.js --write 'src/**/*.{js,ts,json,yml,yaml}' 'tests/**/*.{js,ts,json,yml,yaml}' './*.{js,yml,yaml,json}'",
@@ -19,7 +16,7 @@
         "dev": "npm run build:dev && node dist/index.js",
         "prepare": "husky install"
     },
-    "author": "{{package.author.name}} <{{package.author.email}}>",
+    "author": "Patrick Organ <patrick@permafrost.dev>",
     "license": "MIT",
     "lint-staged": {
         "*.{js,ts}": [
@@ -44,7 +41,6 @@
         "husky": "^7.0.4",
         "jest": "^27.5.1",
         "lint-staged": "^12.3.4",
-        "madge": "^5.0.1",
         "prettier": "^2.5.1",
         "ts-jest": "^27.1.3",
         "typescript": "^4.5"
