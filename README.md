@@ -2,8 +2,34 @@
 
 ---
 
-
 Debug express.js server code with Ray to fix problems faster
+
+---
+
+Install this package in any project using Express.js v4+.
+
+## Usage
+
+### Middleware
+
+`express-ray` provides an error handler middleware named `SendErrorToRay` that sends the request and error details directly to the Ray app:
+
+```js
+// other imports
+import expressRay from 'express-ray';
+
+const app = express();
+
+// <express setup code here>
+
+app.use(expressRay.middleware.SendErrorToRay);
+
+// <more express setup code>
+
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
+```
 
 ## Setup
 
