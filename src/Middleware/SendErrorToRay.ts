@@ -1,9 +1,11 @@
 import { ray } from 'node-ray';
 
-export const sendErrorToRay = (err, req, res, next) => {
+export const sendErrorToRay = (err, req, res, next, rayInstance: any = null) => {
     const { method, url, params, query } = req;
 
-    ray().table(
+    rayInstance = rayInstance ?? ray();
+
+    rayInstance.table(
         {
             error: err.message,
             method,

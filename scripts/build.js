@@ -62,7 +62,7 @@ class Builder {
                 allowOverwrite: true,
                 minify: buildConfig.minify,
                 metafile: true,
-                external: ['axios'],
+                external: ['axios', 'node-ray'],
                 define: {
                     __APP_VERSION__: `'${require(realpathSync(`${buildConfig.basePath}/package.json`, { encoding: 'utf-8' })).version}'`,
                     __COMPILED_AT__: `'${new Date().toUTCString()}'`,
