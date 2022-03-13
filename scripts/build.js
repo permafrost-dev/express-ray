@@ -19,7 +19,7 @@ const buildConfigs = [
     },
     {
         basePath: `${__dirname}/..`,
-        outfile: 'dist/index.es.js',
+        outfile: 'dist/index.es.mjs',
         format: 'esm',
         entry: 'src/index.ts',
         bundle: true,
@@ -46,11 +46,11 @@ class Builder {
         process.stdout.write(`${msg}\n`.toString());
     }
 
-    async compile() {
+    compile() {
         const results = [];
 
-        buildConfigs.forEach(async buildConfig => {
-            const result = await esbuild.build({
+        buildConfigs.forEach(buildConfig => {
+            const result = esbuild.buildSync({
                 logLevel: 'silent',
                 absWorkingDir: buildConfig.basePath,
                 entryPoints: [buildConfig.entry],
@@ -58,10 +58,11 @@ class Builder {
                 bundle: buildConfig.bundle,
                 format: buildConfig.format,
                 platform: buildConfig.platform.name,
-                target: `es2015`, //${buildConfig.platform.name}${buildConfig.platform.version}`,
+                target: `es2015`,
                 allowOverwrite: true,
                 minify: buildConfig.minify,
                 metafile: true,
+                external: ['axios'],
                 define: {
                     __APP_VERSION__: `'${require(realpathSync(`${buildConfig.basePath}/package.json`, { encoding: 'utf-8' })).version}'`,
                     __COMPILED_AT__: `'${new Date().toUTCString()}'`,
@@ -69,21 +70,24 @@ class Builder {
                 },
             });
 
-            const text = await esbuild.analyzeMetafile(result.metafile, {
+            const text = esbuild.analyzeMetafileSync(result.metafile, {
                 color: true,
-                verbose: true,
             });
 
-            this.writeln(text);
+            result['meta'] = text;
 
-            results.push(result);
+            results.push(Object.assign({}, result));
         });
 
-        return new Promise(resolve => resolve(results));
+        return results;
     }
 
     sizeForDisplay(bytes) {
-        return `${bytes / 1024}`.slice(0, 4) + ' kb';
+        let size = `${bytes / 1024}`.slice(0, 4);
+        if (size.endsWith('.')) {
+            size += '0';
+        }
+        return `${size} kb`;
     }
 
     async reportCompileResults(results) {
@@ -121,7 +125,7 @@ class Builder {
             this.writeln(`* Using esbuild v${esbuild.version}.`);
         }
 
-        this.write(`* Compiling application...${this.config.verbose ? '\n' : ''}`);
+        this.write(`* Compiling library...${this.config.verbose ? '\n' : ''}`);
 
         const startedTs = new Date().getTime();
         const results = await this.compile();
@@ -132,6 +136,39 @@ class Builder {
         }
 
         this.writeln((this.config.verbose ? `* D` : `d`) + `one. (${finishedTs - startedTs} ms)`);
+
+        // TODO: group summary by path/package name
+        const groupedLines = {};
+
+        const stripAnsiCodes = str => str.replace(/\x1b\[[0-9;]*m/g, '');
+
+        for (const result of results) {
+            /** @type {String[]} */
+            const lines = result.meta.split('\n');
+
+            const pattern = new RegExp('(node_modules/[^ \t]+)(.*[0-9.]+[gmk]b)(.*[0-9.]+%)');
+
+            lines.forEach(line => {
+                let matches = pattern.exec(stripAnsiCodes(line.replace(/[\s\t]{2, }/g, ' '))); // line.match(pattern);
+
+                if (matches && matches.length) {
+                    matches = matches.map(match => match.trim().replace(/[\s\t]+/g, ' '));
+                    const prefix = matches[1].split('/').slice(0, 2).join('/');
+
+                    if (!groupedLines[prefix]) {
+                        groupedLines[prefix] = [];
+                    }
+
+                    if (!groupedLines[prefix].filter(item => item.includes(matches[1])).length) {
+                        groupedLines[prefix].push(line);
+                    }
+                }
+            });
+
+            //console.log(groupedLines);
+
+            this.writeln(lines.join('\n'));
+        }
     }
 }
 
