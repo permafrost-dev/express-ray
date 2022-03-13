@@ -9,7 +9,7 @@ Debug express.js server code with Ray to fix problems faster
 
 ---
 
-Install this package in any project using Express.js v4+.
+Install this package in any project using Express.js v4.
 
 ---
 
@@ -21,13 +21,13 @@ Install this package in any project using Express.js v4+.
 
 ```js
 // other imports
-import expressRay from 'express-ray';
+import { middleware } from 'express-ray';
 
 const app = express();
 
 // <express setup code here>
 
-app.use(expressRay.middleware.SendErrorToRay);
+app.use(middleware.SendErrorToRay);
 
 // <more express setup code>
 
@@ -41,14 +41,16 @@ app.listen(port, () => {
 ```bash
 npm install
 
-npm run dev
+npm run build:dev
 ```
 
 ## Testing
 
 `express-ray` uses Jest for unit tests.  To run the test suite:
 
-`npm run test`
+```bash
+npm run test
+```
 
 ---
 
