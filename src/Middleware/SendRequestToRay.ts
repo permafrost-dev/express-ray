@@ -14,7 +14,7 @@ export const sendRequestToRay = (options: SendRequestToRayOptions = {}) => {
         const isIgnoredPath = micromatch.isMatch(req.path, ignorePaths);
 
         if (!matchedPath || isIgnoredPath) {
-            next();
+            return next();
         }
 
         const { method, url, params, query, headers } = req;
