@@ -47,18 +47,20 @@ Send details about each request to Ray with the `SendRequestToRay` middleware, o
 
 ```ts
 interface SendRequestToRayOptions {
-    matchPaths?: string[];
-    ignorePaths?: string[];
+    paths?: {
+        include?: string[];
+        ignore?: string[];
+    }
 }
 ```
 
-By default, all paths match and get sent to Ray. Both the `matchPaths` and `ignorePaths` configuration settings support wildcards.
+By default, all paths match and get sent to Ray. Both the `paths.include` and `paths.ignore` configuration settings support wildcards.
 
 ```js
 import { middleware } from 'express-ray';
 
 app.use(
-    middleware.SendRequestToRay({ matchPaths: ['*'], ignorePaths: ['*.css'] })
+    middleware.SendRequestToRay({ paths: { include: ['*'], ignore: ['*.css'] } })
 );
 ```
 
