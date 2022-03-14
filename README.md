@@ -4,11 +4,7 @@
 
 # express-ray
 
-Debug express.js server code with Ray to fix problems faster
-
----
-
-Install this package in any project using Express.js v4.
+Install this package in any Express.js project to provide an exceptional debugging experience using the [Ray app](https://myray.app) by [Spatie](https://spatie.be).
 
 ---
 
@@ -30,6 +26,8 @@ Once installed, access ray via the `app.$ray()` method. See the documentation fo
 
 ### Middleware
 
+#### SendRequestToRay
+
 Send information about each request to Ray with the `SendRequestToRay` middleware.
 
 ```js
@@ -40,8 +38,9 @@ app.use(middleware.SendRequestToRay);
 
 ![image](https://user-images.githubusercontent.com/5508707/158073710-37209980-63b0-4812-9687-f3c1b7c721ab.png)
 
+#### SendErrorToRay
 
-There is also an error handler middleware named `SendErrorToRay` that sends the request and error details directly to Ray:
+To send errors directly to Ray, use the `SendErrorToRay` middleware.
 
 ```js
 import { middleware } from 'express-ray';
@@ -56,11 +55,10 @@ app.listen(port, () => {
 });
 ```
 
-## Setup
+## Development Setup
 
 ```bash
 npm install
-
 npm run build:dev
 ```
 
