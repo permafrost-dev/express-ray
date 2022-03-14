@@ -1,13 +1,15 @@
 import { ray } from 'node-ray';
 import micromatch from 'micromatch';
 export interface SendRequestToRayOptions {
-    matchPaths?: string[];
-    ignorePaths?: string[];
+    paths?: {
+        include?: string[];
+        ignore?: string[];
+    };
 }
 
 export const sendRequestToRay = (options: SendRequestToRayOptions = {}) => {
-    const matchPaths = options.matchPaths || ['*'];
-    const ignorePaths = options.ignorePaths || [];
+    const matchPaths = options.paths?.include || ['*'];
+    const ignorePaths = options.paths?.ignore || [];
 
     const result = (req, res, next, rayInstance: any = null) => {
         const matchedPath = micromatch.isMatch(req.path, matchPaths);
