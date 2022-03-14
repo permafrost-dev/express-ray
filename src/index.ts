@@ -8,7 +8,7 @@ export const middleware = {
 };
 
 export const plugin = {
-    install: (app: any) => installPlugin(app),
+    install: installPlugin,
 };
 
 export default {
