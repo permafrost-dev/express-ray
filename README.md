@@ -14,6 +14,20 @@ Install this package in any project using Express.js v4.
 
 ## Usage
 
+### Plugin Installation
+
+To install the `express-ray` plugin, call the `install` method provided by the `plugin` import:
+
+```js
+import { plugin as expressRayPlugin } from 'express-ray';
+
+const app = express();
+
+expressRayPlugin.install(app);
+```
+
+Once installed, access ray via the `app.$ray()` method. See the documentation for the [node-ray](https://github.com/permafrost-dev/node-ray) package for a list of available methods.
+
 ### Middleware
 
 Send information about each request to Ray with the `SendRequestToRay` middleware.
