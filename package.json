@@ -6,6 +6,7 @@
     "license": "MIT",
     "main": "dist/index.cjs.js",
     "module": "dist/index.es.mjs",
+    "typings": "dist/index.d.ts",
     "exports": {
         ".": {
             "import": "./dist/index.es.mjs",
@@ -21,9 +22,13 @@
         "lint:fix": "./node_modules/.bin/eslint --ext ts,js --fix src/",
         "lint:staged": "./node_modules/.bin/lint-staged",
         "fix": "npm run fmt && npm run lint:fix",
+        "build": "npm run build:prod",
+        "build:all": "npm run build:prod && npm run build:dts",
+        "build:dts": "dts-bundle-generator --no-check -o ./dist/index.d.ts ./src/index.ts",
         "build:dev": "node ./scripts/build.js",
         "build:prod": "node ./scripts/build.js --production",
-        "dev": "npm run build:dev && node dist/index.js",
+        "preversion": "npm run test",
+        "postversion": "npm run build:all",
         "prepare": "husky install"
     },
     "lint-staged": {
@@ -43,6 +48,7 @@
         "@types/node": "^17.0.18",
         "@typescript-eslint/eslint-plugin": "^5.12.0",
         "@typescript-eslint/parser": "^5.12.0",
+        "dts-bundle-generator": "^6.5.0",
         "esbuild": "^0.14.25",
         "eslint": "^8.10.0",
         "eslint-plugin-jest": "^26.1.1",
