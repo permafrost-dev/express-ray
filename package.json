@@ -1,6 +1,6 @@
 {
     "name": "express-ray",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Debug express.js server code with Ray to fix problems faster",
     "author": "Patrick Organ <patrick@permafrost.dev>",
     "license": "MIT",
