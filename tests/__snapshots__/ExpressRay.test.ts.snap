@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sends requests to Ray 1`] = `
+Array [
+  Object {
+    "meta": undefined,
+    "payloads": TablePayload {
+      "data": Object {
+        "content": "",
+        "origin": Object {
+          "file": "",
+          "function_name": "",
+          "hostname": "remote",
+          "line_number": 0,
+        },
+        "type": "",
+      },
+      "initialized": false,
+      "label": "Request",
+      "localPath": null,
+      "remotePath": null,
+      "values": Object {
+        "headers": Object {},
+        "method": "GET",
+        "params": Object {},
+        "query": Object {},
+        "url": "/",
+      },
+    },
+  },
+]
+`;
