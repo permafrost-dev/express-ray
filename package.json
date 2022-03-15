@@ -24,7 +24,7 @@
         "fix": "npm run fmt && npm run lint:fix",
         "build": "npm run build:prod",
         "build:all": "npm run build:prod && npm run build:dts",
-        "build:dts": "dts-bundle-generator --no-check -o ./dist/index.d.ts ./src/index.ts",
+        "build:dts": "node scripts/generate-typescript-definitions.js",
         "build:dev": "node ./scripts/build.js",
         "build:prod": "node ./scripts/build.js --production",
         "preversion": "npm run test",
