@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sends a get request to ray 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "headers": undefined,
+      "method": "GET",
+      "params": Object {},
+      "query": Object {},
+      "url": "/",
+    },
+    "label": "Request",
+  },
+]
+`;
+
+exports[`sends a post request to ray 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "body": Object {
+        "message": "test",
+      },
+      "headers": undefined,
+      "method": "POST",
+      "params": Object {},
+      "query": Object {},
+      "url": "/",
+    },
+    "label": "Request",
+  },
+]
+`;
