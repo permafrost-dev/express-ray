@@ -48,6 +48,21 @@ app.get('/', (req, res) => {
 });
 ```
 
+### Methods
+
+The `app.$ray()` method provides additional helper methods specifically for express applications.
+
+| Method                  | Description                                                    |
+| ----------------------- | -------------------------------------------------------------- |
+| `$ray().request(req)`   | Sends information about the request object to Ray              |
+
+```js
+app.get('/api/test', (req, res) => {
+    app.$ray().request(req);
+    res.send({ message: 'hello world' });
+});
+```
+
 ### Middleware
 
 #### SendRequestToRay
