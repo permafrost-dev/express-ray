@@ -9,8 +9,8 @@
     <img src="https://shields.io/github/license/permafrost-dev/express-ray?logo=opensourceinitiative&logoColor=white" alt="license">
     <img src="https://github.com/permafrost-dev/express-ray/workflows/Run%20Tests/badge.svg" alt="test status">
     <img src="https://codecov.io/gh/permafrost-dev/express-ray/branch/main/graph/badge.svg?token=1tgFqjGUPF"/>
-    <!--<br>-->
-    <!--<img src="https://img.shields.io/npm/dt/express-ray.svg?logo=npm" alt="npm downloads">-->
+    <br>
+    <img src="https://img.shields.io/npm/dt/express-ray.svg?logo=npm" alt="npm downloads">
 </p>
 
 Install this package in any Express.js project to provide an exceptional debugging experience using the [Ray app](https://myray.app) by [Spatie](https://spatie.be).
@@ -71,20 +71,24 @@ Send details about each request to Ray with the `SendRequestToRay` middleware, o
 
 ```ts
 interface SendRequestToRayOptions {
+    methods?: HttpMethod[];
     paths?: {
         include?: string[];
         ignore?: string[];
-    }
+    };
 }
 ```
 
-By default, all paths match and get sent to Ray. Both the `paths.include` and `paths.ignore` configuration settings support wildcards.
+By default, all paths and http methods match and get sent to Ray. The `paths.include`, `paths.ignore`, and `methods` configuration settings support wildcards.
 
 ```js
 import { middleware } from 'express-ray';
 
 app.use(
-    middleware.SendRequestToRay({ paths: { include: ['*'], ignore: ['*.css'] } })
+    middleware.SendRequestToRay({ 
+        methods: [HttpMethod.GET],
+        paths: { include: ['/api/*'], ignore: ['/api/ignored'] } 
+    })
 );
 ```
 
